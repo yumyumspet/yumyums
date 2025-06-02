@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YumYums - Premium Pet Treats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Modern YumYums Design System */
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-pink: #FF1B6B;
+            --primary-blue: #45B7D1;
+            --primary-yellow: #FFA500;
+            --accent-teal: #20E3B2;
+            --accent-purple: #667EEA;
+            --neutral-cream: #FFFBF5;
+            --neutral-gray-50: #F8FAFC;
+            --neutral-gray-100: #F1F5F9;
+            --neutral-gray-600: #475569;
+            --neutral-gray-900: #0F172A;
+            --gradient-rainbow: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-orange) 25%, var(--primary-yellow) 50%, var(--accent-teal) 75%, var(--primary-blue) 100%);
+            --gradient-sunset: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-pink) 100%);
+            --gradient-ocean: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-teal) 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-cream);
+            color: var(--neutral-gray-900);
+            line-height: 1.6;
+        }
+
+        .font-fredoka { font-family: 'Fredoka', cursive; }
+
+        /* Original YumYums Logo - Multi-color & Puffy/3D Effect */
+        .logo-yumyums-main {
+            letter-spacing: -1.5px;
+            font-family: 'Fredoka', cursive;
+            text-decoration: none;
+        }
+        .logo-yumyums-main span {
+            display: inline-block;
+            font-size: 2.5rem;
+            line-height: 1;
+            position: relative;
+            font-weight: 700;
+            text-shadow: 
+                1px 1px 0px rgba(0,0,0,0.1),
+                2px 2px 0px rgba(0,0,0,0.1),
+                3px 3px 0px rgba(0,0,0,0.08),
+                -1px -1px 1px rgba(255,255,255,0.7),
+                1px 1px 0px var(--yum-text-dark-outline, #773e2e);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .logo-yumyums-main:hover span {
+            transform: translateY(-4px) scale(1.05) rotate(-3deg);
+        }
+        .logo-yumyums-main:hover span:nth-child(2n) {
+            transform: translateY(-4px) scale(1.05) rotate(3deg);
+        }
+
+        .logo-y, .logo-s { color: var(--primary-yellow); --yum-text-dark-outline: #b57d0c; }
+        .logo-u { color: var(--primary-pink); --yum-text-dark-outline: #a93b65; }
+        .logo-m { color: var(--primary-blue); --yum-text-dark-outline: #007aa8; }
+
+        /* Enhanced Button Styles */
+        .btn-primary {
+            background: var(--gradient-sunset);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-ocean);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(69, 183, 209, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(69, 183, 209, 0.4);
+        }
+
+        /* Card Animations */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 53, 0.1) 0%, 
+                rgba(255, 27, 107, 0.1) 25%, 
+                rgba(69, 183, 209, 0.1) 50%, 
+                rgba(32, 227, 178, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(69, 183, 209, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(32, 227, 178, 0.1) 0%, transparent 50%);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        /* Gradients */
+        .bg-gradient-rainbow { background: var(--gradient-rainbow); }
+        .bg-gradient-sunset { background: var(--gradient-sunset); }
+        .bg-gradient-ocean { background: var(--gradient-ocean); }
+
+        /* Feature Icons */
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .feature-icon:hover {
+            transform: scale(1.15) rotate(10deg);
+        }
+
+        /* Product Badges */
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo-yumyums-main span {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-glass fixed w-full top-0 z-50 py-4 transition-all duration-300">
+        <div class="container mx-auto px-6 flex items-center justify-center">
+            <a href="#" class="logo-yumyums-main">
+                <span class="logo-y">Y</span><span class="logo-u">U</span><span class="logo-m">M</span><span class="logo-y">Y</span><span class="logo-u">U</span><span class="logo-m">M</span><span class="logo-s">S</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="floating mb-8">
+                <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=200&h=200&fit=crop&auto=format&q=80" 
+                     alt="Happy Pet with YumYums" 
+                     class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full shadow-2xl border-4 border-white object-cover">
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-fredoka font-bold text-gray-900 mb-6 leading-tight">
+                <span class="block">Premium Pet Treats</span>
+                <span class="bg-gradient-rainbow bg-clip-text text-transparent">That Make Tails Wag!</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                All-natural, delicious treats crafted with love and packed with nutrients your furry friends crave.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="btn-primary text-lg">
+                    <i class="fas fa-paw mr-2"></i>Explore Our Treats
+                </button>
+                <button class="btn-secondary text-lg">
+                    <i class="fas fa-heart mr-2"></i>Learn More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-fredoka text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Our Premium Collection
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Discover why pets and their parents can't get enough of these irresistible treats
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-orange-500 text-white">
+                        Bestseller
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Super Salmon Snackers" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Super Salmon Snackers</h3>
+                    <p class="text-gray-600 mb-4">Rich in Omega-3s for a shiny coat and healthy skin. Made with wild-caught salmon for premium nutrition.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-orange-500">$24.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(127)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-green-500 text-white">
+                        New Recipe
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Chicken Chompers" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Chicken Chompers</h3>
+                    <p class="text-gray-600 mb-4">Free-range chicken treats that are perfect for training and rewarding good behavior. Irresistibly delicious!</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-blue-500">$19.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(94)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-purple-500 text-white">
+                        Organic
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Veggie Delight Sticks" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Veggie Delight Sticks</h3>
+                    <p class="text-gray-600 mb-4">Crunchy vegetable treats packed with vitamins and minerals for optimal health. Perfect for health-conscious pets.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-teal-500">$16.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(78)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-pink-500 text-white">
+                        Limited Edition
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Peanut Butter Bites" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Peanut Butter Bites</h3>
+                    <p class="text-gray-600 mb-4">Creamy peanut butter goodness in bite-sized pieces. Made with natural peanut butter and no added sugar.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-pink-500">$22.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(156)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-indigo-500 text-white">
+                        Grain-Free
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Turkey & Sweet Potato" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Turkey & Sweet Potato</h3>
+                    <p class="text-gray-600 mb-4">Lean turkey protein combined with nutritious sweet potato. Perfect for pets with grain sensitivities.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-indigo-500">$26.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(89)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="card group relative">
+                    <div class="product-badge bg-yellow-500 text-white">
+                        Fan Favorite
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop&auto=format&q=80" 
+                             alt="Beef & Cheese Bites" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-2">Beef & Cheese Bites</h3>
+                    <p class="text-gray-600 mb-4">Premium beef combined with real cheese for an irresistible flavor combination that dogs absolutely love.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-yellow-500">$21.99</span>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-2">(203)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Statistics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 text-center">
+                <div>
+                    <div class="text-4xl font-bold text-orange-500 mb-2">50,000+</div>
+                    <p class="text-gray-600">Happy Pets Served</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-blue-500 mb-2">4.9/5</div>
+                    <p class="text-gray-600">Average Rating</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-teal-500 mb-2">98%</div>
+                    <p class="text-gray-600">Customer Satisfaction</p>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold text-pink-500 mb-2">100%</div>
+                    <p class="text-gray-600">Natural Ingredients</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose YumYums -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-fredoka text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    Why Pets Love YumYums
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    We're passionate about creating the healthiest, most delicious treats for your beloved companions
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="feature-icon bg-gradient-sunset text-white">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-3">100% Natural</h3>
+                    <p class="text-gray-600">No artificial preservatives, colors, or flavors. Just pure, wholesome ingredients your pet deserves.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="feature-icon bg-gradient-ocean text-white">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-3">Made with Love</h3>
+                    <p class="text-gray-600">Every batch is carefully crafted in small quantities to ensure freshness and quality.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="feature-icon bg-gradient-rainbow text-white">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="font-fredoka text-2xl font-semibold text-gray-900 mb-3">Vet Approved</h3>
+                    <p class="text-gray-600">Formulated with veterinary nutritionists to support your pet's health and happiness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <a href="#" class="logo-yumyums-main text-white inline-block mb-6">
+                    <span class="logo-y">Y</span><span class="logo-u">U</span><span class="logo-m">M</span><span class="logo-y">Y</span><span class="logo-u">U</span><span class="logo-m">M</span><span class="logo-s">S</span>
+                </a>
+                <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                    Making tails wag and hearts happy with premium, all-natural pet treats since 2020.
+                </p>
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-sm">
+                    © 2024 YumYums Pet Treats. All rights reserved. Made with ❤️ for pets everywhere.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html> 
